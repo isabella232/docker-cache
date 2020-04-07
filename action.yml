@@ -6,6 +6,9 @@ inputs:
  or to update the dockerfiles within the monorepo to use the latest cache image.\ 
  Valid values are: UPDATE_CACHE_FILE or UPDATE_DOCKER_FILES'
     required: true
+outputs:
+  builderVersion:
+    description: The latest builder version fetched from Dockerhub
 runs:
   using: 'node12'
   main: 'dist/index.js'

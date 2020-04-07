@@ -17,9 +17,10 @@ export async function updateCacheFile(
   core.info(
     `Updating cache file ${path} with builder version ${latestBuilder}...`
   );
+  core.setOutput("builderVersion", latestBuilder);
 
   const updated = sed("-i", includes(baseRepo), `FROM ${latestBuilder}`, [
-    path
+    path,
   ]);
   return updated;
 }
