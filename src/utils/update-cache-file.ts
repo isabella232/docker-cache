@@ -9,7 +9,7 @@ import { getGitRoot, getLatestName } from './utils'
  * @param baseRepo [smartcontract/builder] The docker repo of the base file
  */
 export async function updateCacheFile(
-  name = 'cache.Dockerfile',
+  name = 'builder-cache.Dockerfile',
   baseRepo = 'smartcontract/builder',
 ) {
   const path = getCacheFilePath(name)

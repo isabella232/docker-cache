@@ -8,7 +8,9 @@ import { getGitRoot, getLatestName } from './utils'
  *
  * @param cacheRepo [smartcontract/cache] The dockerhub repository of the cache image
  */
-export async function updateDockerfiles(cacheRepo = 'smartcontract/cache') {
+export async function updateDockerfiles(
+  cacheRepo = 'smartcontract/builder-cache',
+) {
   const { latestName } = await getLatestName(cacheRepo)
   const files = getDockerFiles(cacheRepo)
 
