@@ -1,13 +1,13 @@
-import * as core from "@actions/core";
-import * as drc from "docker-registry-client";
-import * as semver from "semver";
-import { exec } from "shelljs";
+import * as core from '@actions/core'
+import * as drc from 'docker-registry-client'
+import * as semver from 'semver'
+import { exec } from 'shelljs'
 
 /**
  * Get the absolute path of the root of the repository
  */
 export function getGitRoot() {
-  return exec("git rev-parse --show-toplevel", { silent: true }).trim();
+  return exec('git rev-parse --show-toplevel', { silent: true }).trim()
 }
 
 /**
@@ -16,19 +16,19 @@ export function getGitRoot() {
  */
 export async function getLatestName(repo: string) {
   const client = drc.createClientV2({
-    name: repo
-  });
+    name: repo,
+  })
 
-  const { tags } = await listTags(client);
+  const { tags } = await listTags(client)
   const filteredTags = tags
-    .filter(t => !!semver.valid(t))
-    .sort((a, b) => semver.compare(a, b));
+    .filter((t) => !!semver.valid(t))
+    .sort((a, b) => semver.compare(a, b))
 
-  const latestTag = filteredTags[filteredTags.length - 1];
-  const latestName = `${repo}:${latestTag}`;
-  core.info(`Fetched latest tag for repo ${repo}: ${latestTag}`);
+  const latestTag = filteredTags[filteredTags.length - 1]
+  const latestName = `${repo}:${latestTag}`
+  core.info(`Fetched latest tag for repo ${repo}: ${latestTag}`)
 
-  return latestName;
+  return { latestName, latestTag }
 }
 
 /**
@@ -39,11 +39,11 @@ export async function getLatestName(repo: string) {
 function listTags(client: drc.RegistryClientV2): Promise<drc.Tags> {
   return new Promise((resolve, reject) => {
     client.listTags((err, tags) => {
-      client.close();
+      client.close()
       if (err) {
-        return reject(err);
+        return reject(err)
       }
-      return resolve(tags);
-    });
-  });
+      return resolve(tags)
+    })
+  })
 }
